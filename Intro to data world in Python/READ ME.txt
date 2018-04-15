@@ -1,0 +1,9 @@
+1 ) Install data.world's Python package, including optional pandas dependencies:
+
+pip install datadotworld[pandas]
+
+2 ) Run the dw command-line tool to configure your machine:
+
+dw configure
+
+3 ) Copy/Paste in your data.world API token when prompted. Find your token at https://data.world/settings/advanced
