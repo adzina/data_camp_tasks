@@ -1,5 +1,5 @@
 import datadotworld as dw
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 # Import the city council votes dataset
 dataset = dw.load_dataset("stephen-hoover/chicago-city-council-votes")
