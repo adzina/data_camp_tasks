@@ -1,0 +1,126 @@
+# Define the values of the proportion: P
+P <- c(0.5, 0.6, 0.7, 0.8, 0.9)
+
+# Define Madison's prior: Prior
+Prior <- c(0.3, 0.3, 0.2, 0.1, 0.1)
+
+# Compute the likelihoods: Likelihood
+Likelihood = dbinom(16, size=20, prob = P)
+
+# Create Bayes data frame: bayes_df
+bayes_df <- data.frame(P, Prior, Likelihood)
+
+# Compute and print the posterior probabilities: bayes_df
+bayes_df <- bayesian_crank(bayes_df)
+bayes_df
+# Graphically compare the prior and posterior
+prior_post_plot(bayes_df)
+
+
+#beta curve with params a=8.13 b=3.67
+# Find the probability that P is smaller than 0.85
+pbeta(0.85, 8.13,3.67)
+
+# Find the probability that P is larger than 0.85
+1-pbeta(0.85, 8.13, 3.67)
+
+# Find the 0.75 quantile of P
+qbeta(0.75, 8.13, 3.67)
+
+
+# Specify that the 0.25 quantile of P is equal to 0.7: quantile1
+quantile1 <- list(p=0.25, x=0.7)
+
+# Specify that the 0.75 quantile of P is equal to 0.85: quantile2
+quantile2 <- list(p=0.75, x=0.85)
+
+# Find the beta shape parameters matching the two quantiles: ab
+ab = beta.select(quantile1,quantile2)
+
+# Plot the beta curve using the beta_draw() function
+beta_draw(ab)
+
+
+# Harry's shape parameters for his prior: ab
+ab <- c(3,3)
+
+# Vector of successes and failures: sf
+sf <- c(16,4)
+
+# Harry's shape parameters for his posterior: ab_new
+ab_new <- ab + sf
+
+# Graph Harry's posterior
+beta_draw(ab_new)
+
+
+# Vector of beta parameters for Harry: ab
+ab <- c(19,7)
+
+# Compute probability that P is smaller than 0.70
+pbeta(0.7,ab[1],ab[2])
+
+# Show the area that is computed
+beta_area(0,0.7,ab)
+
+
+# Vector of beta parameters for Harry: ab
+ab <- c(19, 7)
+
+# Compute 90 percent interval
+qbeta(c(0.05,0.95),ab[1],ab[2])
+
+# Show the interval that is computed
+beta_interval(0.9,ab)
+
+
+# Define the number of successes and sample size: y, n
+y <- 16
+n <- 20
+
+# Construct a 90 percent confidence interval
+classical_binom_ci(y, n, .90)
+
+# Define the shape parameters for a uniform prior: ab
+ab <- c(1,1)
+
+# Find the shape parameters of the posterior: ab_new
+ab_new <- c(1+16,1+4)
+
+# Find a 90% Bayesian probability interval
+qbeta(c(0.05, 0.95), ab_new[1],ab_new[2])
+
+
+# Vector of beta parameters for Harry: ab
+ab <- c(19, 7)
+
+# Simulate 1000 draws from the beta posterior: p_sim
+p_sim <- rbeta(1000,ab[1],ab[2])
+
+# Construct a histogram of the simulated values
+hist(p_sim,freq=FALSE)
+
+# Compute the probability that P is larger than 0.7
+sum(p_sim>0.7)/1000
+
+# Find a 90% probability interval
+quantile(p_sim,c(0.05,0.95))
+
+
+# Vector of beta parameters for Harry: ab
+ab <- c(19, 7)
+
+# Simulate 1000 draws from the beta posterior: p_sim
+p_sim <- rbeta(1000, ab[1], ab[2])
+
+# Compute the odds-ratio: or_sim
+or_sim <- p_sim / (1 - p_sim)
+
+# Construct a histogram of the simulated values of or_sim
+hist(or_sim)
+
+# Find the probability the odds ratio is greater than 2
+sum(or_sim > 2) / 1000
+
+# Find a 90% probability interval for the odds ratio
+quantile(or_sim, c(0.05, 0.95))
